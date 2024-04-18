@@ -4,6 +4,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lambdalisue/fern.vim'
 Plug 'tomasiser/vim-code-dark'
+Plug 'easymotion/vim-easymotion'
 
 call plug#end()
 
@@ -47,6 +48,7 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap <Leader>z :noh
 nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
+nnoremap f <Plug>(easymotion-overwin-f2)
 
 nmap あ a
 nmap い i
