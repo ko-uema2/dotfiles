@@ -149,23 +149,24 @@ if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]
     zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
 fi
 
-# peco
+# Function to provide history selection using peco
+# Displays the history in reverse order and executes the selected command
 function peco-select-history() {
-local tac
-if which tac > /dev/null; then
-tac="tac"
-else
-tac="tail -r"
-fi
-BUFFER=$(\history -n 1 | \
-eval $tac | \
-peco --query "$LBUFFER")
-cursor=$#BUFFER
-zle clear-screen
+  local tac
+  if which tac > /dev/null; then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+  BUFFER=$(\history -n 1 | \
+  eval $tac | \
+  peco --query "$LBUFFER")
+  cursor=$#BUFFER
+  zle clear-screen
 }
-zle -N peco-select-history
-bindkey '^r' peco-select-history
 
+# Function to select a recent directory using peco
+# Filters the output of the cdr command with peco and navigates to the selected directory
 function peco-get-destination-from-cdr() {
   cdr -l | \
   sed -e 's/^[[:digit:]]*[[:blank:]]*//' | \
@@ -181,6 +182,13 @@ function peco-cdr() {
     zle reset-prompt
   fi
 }
+
+# Keybinding settings
+# Bind Ctrl+r to invoke peco-select-history
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+# Bind Ctrl+u to invoke peco-cdr
 zle -N peco-cdr
 bindkey '^u' peco-cdr
 
