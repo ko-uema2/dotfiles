@@ -22,6 +22,7 @@
       acpi \
       jq
 
+
     ############################################################
     # install the latest peco from the official GitHub release #
     ############################################################
@@ -36,7 +37,8 @@
     sudo mv peco_linux_amd64/peco /usr/local/bin/
     cd -
     rm -rf "$TMP_DIR"
-    echo "✅ peco installed: $(peco --version)"
+    echo "✅ peco installed"
+
 
     ##############################################################
     # install the latest Neovim from the official GitHub release #
@@ -54,7 +56,43 @@
     sudo mv nvim-linux-x86_64.appimage /opt/nvim/nvim
     cd -
     rm -rf "$TMP_DIR"
-    echo "✅ Installed Neovim: $(nvim --version | head -n 1)"
+    echo "✅ Neovim Installed"
+
+
+    #########################################################
+    # verify installed packages and display their versions  #
+    #########################################################
+
+    echo
+    echo "--------------------------------------------"
+    echo "🧩 Installed Packages Summary"
+    echo "--------------------------------------------"
+
+    declare -A PACKAGES=(
+      [git]="git --version"
+      [vim]="vim --version | head -n 1"
+      [curl]="curl --version | head -n 1"
+      [zsh]="zsh --version"
+      [tmux]="tmux -V"
+      [jq]="jq --version"
+      [acpi]="acpi -V"
+      [peco]="peco --version"
+      [nvim]="nvim --version | head -n 1"
+    )
+
+    for pkg in ${(k)PACKAGES}; do
+      if command -v $pkg >/dev/null 2>&1; then
+        version=$(eval ${PACKAGES[$pkg]} 2>/dev/null)
+        echo "✅ $pkg: $version"
+      else
+        echo "❌ $pkg: Not installed"
+      fi
+    done
+
+    echo "--------------------------------------------"
+    echo "✅ Installation check complete"
+    echo "--------------------------------------------"
+
 
   {{ end }}
 
