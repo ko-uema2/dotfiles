@@ -1,0 +1,123 @@
+#!/usr/bin/env zsh
+
+#load-average
+function get-load-avg() {
+  echo "#[fg=colour014][#[default]#[fg=blue] CPU:$(uptime | awk -F'load average: ' '{print $2}' | cut -d, -f1) #[default]#[fg=colour014]]#[default]"
+}
+
+# ---- Ubuntu (nmcli) 用 ----
+function get-wifi-state-ubuntu() {
+  if ! command -v nmcli &>/dev/null; then
+    echo "#[fg=yellow] N/A #[default]"
+    return
+  fi
+
+  local ssid=$(nmcli -t -f active,ssid dev wifi | awk -F: '$1=="はい"{print $2}')
+  local signal=$(nmcli -t -f active,signal dev wifi | awk -F: '$1=="はい"{print $2}')
+
+  if [[ -z "$ssid" ]]; then
+    echo "#[fg=red] ✘ #[default]"
+    return
+  fi
+
+  if (( ${#ssid} > 20 )); then
+    ssid=$(echo "$ssid" | cut -c 1-20 | sed 's/$/.../')
+  fi
+
+  local signals=(▁ ▂ ▄ ▆ █)
+  local level=$(( (signal + 19) / 20 ))  # 0〜100 を 5段階に変換
+  (( level < 1 )) && level=1
+  (( level > 5 )) && level=5
+
+  local bars=""
+  for ((i=1; i<=level; i++)); do
+    bars="${bars}${signals[i-1]}"
+  done
+
+  echo " #[underscore]#[fg=blue]${ssid}#[default]#[fg=colour014] ${bars} "
+}
+
+# ---- ラッパー関数 ----
+function get-wifi-state() {
+  local wifi=""
+
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOSではWi-Fi情報を出さず、代わりに「無効」と表示
+    wifi="#[fg=yellow](Wi-Fi disabled on macOS)#[default]"
+  elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    wifi=$(get-wifi-state-ubuntu)
+  else
+    wifi="#[fg=yellow] N/A #[default]"
+  fi
+
+  echo "#[fg=colour014]|#[default]${wifi}|#[default]"
+}
+
+# --- macOS 用 ---
+function get-battery-state-macos() {
+  local battery=""
+
+  local battery_info=$(/usr/bin/pmset -g ps | awk '{ if (NR == 2) print $3 " " $4 }' | sed -e "s/;//g" -e "s/%//")
+  if [[ -n $battery_info ]]; then
+    local battery_quantity=$(echo $battery_info | awk '{print $1}')
+    if [[ ! $battery_info =~ "discharging" ]]; then
+      battery="#[bg=cyan,fg=black] +$battery_quantity% #[default]"
+    elif (( battery_quantity < 16 )); then
+      battery="#[bg=red,fg=white] $battery_quantity% #[default]"
+    else
+      battery="#[bg=cyan,fg=black] $battery_quantity% #[default]"
+    fi
+  fi
+
+  echo "$battery"
+}
+
+# --- Ubuntu/Linux 用 ---
+function get-battery-state-ubuntu() {
+  local battery=""
+
+  if ! command -v acpi &>/dev/null; then
+    battery="#[fg=yellow] acpi not installed #[default]"
+    echo "$battery"
+    return
+  fi
+
+  # acpi 出力例: "Battery 0: Discharging, 53%, 02:15:20 remaining"
+  local acpi_out=$(acpi -b)
+  local battery_quantity=$(echo "$acpi_out" | grep -o '[0-9]\+%' | tr -d '%')
+  local state=$(echo "$acpi_out" | awk '{print $3}' | tr -d ',')
+
+  if [[ "$state" != "Discharging" ]]; then
+    battery="#[bg=cyan,fg=black] +$battery_quantity% #[default]"
+  elif (( battery_quantity < 16 )); then
+    battery="#[bg=red,fg=white] $battery_quantity% #[default]"
+  else
+    battery="#[bg=cyan,fg=black] $battery_quantity% #[default]"
+  fi
+
+  echo "$battery"
+}
+
+# --- ラッパー関数 ---
+function get-battery-state() {
+  local battery=""
+
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    battery=$(get-battery-state-macos)
+  elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    battery=$(get-battery-state-ubuntu)
+  else
+    battery="#[fg=yellow] N/A #[default]"
+  fi
+
+  echo "$battery"
+}
+
+function main() {
+  local load_avg=$(get-load-avg)
+  local wifi=$(get-wifi-state)
+  local battery=$(get-battery-state)
+  echo "${load_avg}${wifi}${battery}"
+}
+
+main $@
