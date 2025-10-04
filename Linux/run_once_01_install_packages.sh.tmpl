@@ -4,8 +4,12 @@
 
   {{ if eq .chezmoi.osRelease.id "ubuntu" }}
 
-    # install by apt
+    ######################################
+    # install essential packages via apt #
+    ######################################
+
     echo "Updating apt and installing base packages..."
+
     sudo apt update
     sudo apt install -y \
       git \
@@ -18,7 +22,10 @@
       acpi \
       jq
 
-    # install peco by github release
+    ############################################################
+    # install the latest peco from the official GitHub release #
+    ############################################################
+
     echo "Installing peco..."
 
     TMP_DIR=$(mktemp -d)
@@ -31,12 +38,15 @@
     rm -rf "$TMP_DIR"
     echo "✅ peco installed: $(peco --version)"
 
-    # install Neovim by github release
+    ##############################################################
+    # install the latest Neovim from the official GitHub release #
+    ##############################################################
+
     echo "Installing Neovim AppImage..."
 
     TMP_DIR=$(mktemp -d)
     cd "$TMP_DIR"
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+    curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage"
     chmod u+x nvim-linux-x86_64.appimage
     ./nvim-linux-x86_64.appimage --appimage-extract
 
@@ -44,8 +54,7 @@
     sudo mv nvim-linux-x86_64.appimage /opt/nvim/nvim
     cd -
     rm -rf "$TMP_DIR"
-    echo "✅ Installed Neovim:"
-    nvim --version | head -n 1
+    echo "✅ Installed Neovim: $(nvim --version | head -n 1)"
 
   {{ end }}
 
