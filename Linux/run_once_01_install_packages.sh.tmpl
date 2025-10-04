@@ -75,7 +75,7 @@
       [zsh]="zsh --version"
       [tmux]="tmux -V"
       [jq]="jq --version"
-      [acpi]="acpi -V"
+      [acpi]="acpi -version | head -n 1"
       [peco]="peco --version"
       [nvim]="nvim --version | head -n 1"
     )
@@ -90,7 +90,7 @@
     done
 
     echo "--------------------------------------------"
-    echo "✅ Installation check complete"
+    echo "🧩 Installation check complete"
     echo "--------------------------------------------"
 
 
