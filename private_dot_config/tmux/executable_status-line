@@ -2,7 +2,7 @@
 
 #load-average
 function get-load-avg() {
-  echo "#[fg=colour014][#[default]#[fg=blue] CPU:$(uptime | awk -F'load average: ' '{print $2}' | cut -d, -f1) #[default]#[fg=colour014]]#[default]"
+  echo "#[fg=colour014][#[default]#[fg=blue] CPU:$(uptime | awk -F'load average[s]*: ' '{print $2}' | cut -d, -f1) #[default]#[fg=colour014]]#[default]"
 }
 
 # ---- Ubuntu (nmcli) 用 ----
