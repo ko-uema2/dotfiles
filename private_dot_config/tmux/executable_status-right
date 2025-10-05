@@ -2,7 +2,7 @@
 
 #load-average
 function get-load-avg() {
-  echo "#[fg=colour014][#[default]#[fg=blue] CPU:$(uptime | awk -F'load average[s]*: ' '{print $2}' | sed 's/,//g' | awk '{print $2}') #[default]#[fg=colour014]]#[default]"
+  echo "#[fg=colour014][#[default]#[fg=cyan] CPU:$(uptime | awk -F'load average[s]*: ' '{print $2}' | sed 's/,//g' | awk '{print $2}') #[default]#[fg=colour014]]#[default]"
 }
 
 # ---- Ubuntu (nmcli) 用 ----
@@ -34,7 +34,7 @@ function get-wifi-state-ubuntu() {
     bars="${bars}${signals[i-1]}"
   done
 
-  echo " #[underscore]#[fg=blue]${ssid}#[default]#[fg=colour014] ${bars} "
+  echo " #[underscore]#[fg=cyan]${ssid}#[default]#[fg=colour014] ${bars} "
 }
 
 # ---- ラッパー関数 ----

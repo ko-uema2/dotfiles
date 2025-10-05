@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+# ---------- カラー定義 ----------
+STATUS_LEFT_MODE_VIEW="#[fg=colour254,bg=colour64] VIEW "
+STATUS_LEFT_MODE_COPY="#[fg=colour254,bg=colour61] COPY "
+
+PREFIX_ON_COLOR="#[fg=colour254]#[bg=colour136]"
+PREFIX_OFF_COLOR="#[fg=colour254]#[bg=colour244]"
+STATUS_LEFT_PREFIX="#{?client_prefix,${PREFIX_ON_COLOR} ON  ,${PREFIX_OFF_COLOR} OFF }#[default]"
+
+STATUS_LEFT_SESSION="#[fg=colour254,bg=colour37] Session: #S #[default] "
+
+# ---------- モードに応じた構築 ----------
+STATUS_LEFT_VIEW="${STATUS_LEFT_MODE_VIEW}${STATUS_LEFT_PREFIX}${STATUS_LEFT_SESSION}"
+STATUS_LEFT_COPY="${STATUS_LEFT_MODE_COPY}${STATUS_LEFT_PREFIX}${STATUS_LEFT_SESSION}"
+
+# ---------- copy-mode 判定 ----------
+if [[ "$(tmux display-message -p '#{pane_mode}')" == "copy-mode" ]]; then
+  echo "${STATUS_LEFT_COPY}"
+else
+  echo "${STATUS_LEFT_VIEW}"
+fi
+
