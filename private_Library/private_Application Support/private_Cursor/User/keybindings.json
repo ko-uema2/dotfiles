@@ -100,16 +100,6 @@
     "when": "editorTextFocus && vim.mode == 'Normal'"
   },
   {
-    "key": "ctrl+alt+h",
-    "command": "workbench.action.decreaseViewSize",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+alt+l",
-    "command": "workbench.action.increaseViewSize",
-    "when": "editorTextFocus"
-  },
-  {
     "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
