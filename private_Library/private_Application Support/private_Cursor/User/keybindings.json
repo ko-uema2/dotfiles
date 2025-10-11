@@ -1,0 +1,215 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+[
+  //----------------------------------------------------------
+  // エディタにフォーカスしている時の設定
+  //----------------------------------------------------------
+  // サイドバーを表示/非表示
+  {
+    "key": "space e",
+    "command": "workbench.action.focusSideBar",
+    "when": "!editorFocus && !terminalFocus && !inputFocus"
+  },
+  // エディタの最大化
+  {
+    "key": "ctrl+m",
+    "command": "workbench.action.togglePanel",
+    "when": "editorFocus && vim.mode == 'Normal'"
+  },
+  // エディタの縦分割
+  {
+    "key": "ctrl+g h",
+    "command": "workbench.action.splitEditorRight",
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  // エディタの横分割
+  {
+    "key": "ctrl+g v",
+    "command": "workbench.action.splitEditorDown",
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  // ターミナルへのカーソルフォーカス
+  {
+    "key": "ctrl+g ctrl+j",
+    "command": "workbench.action.terminal.focus",
+    "when": "editorFocus && vim.mode == 'Normal'"
+  },
+  // 左エディタ → エクスプローラーへカーソル移動
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusSideBar",
+    "when": "editorFocus && vim.mode == 'Normal' && activeEditorGroupIndex == 1"
+  },
+  // エディタ間のカーソル移動（左へ）
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusLeftGroup",
+    "when": "editorFocus && vim.mode == 'Normal' && activeEditorGroupIndex > 1"
+  },
+  // エディタ間のカーソル移動（右へ）
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.focusFirstEditorGroup",
+    "when": "explorerViewletVisible && !editorTextFocus"
+  },
+  // エディタ間のカーソル移動（下へ）
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusBelowGroup",
+    "when": "editorFocus && vim.mode == 'Normal'"
+  },
+  // エディタ間のカーソル移動（上へ）
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "editorFocus && vim.mode == 'Normal'"
+  },
+  // ファイルを右ペインに移動
+  {
+    "key": "ctrl+]",
+    "command": "workbench.action.moveEditorToRightGroup",
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  // ファイルを右ペインに複製
+  {
+    "key": "ctrl+g ctrl+]",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.splitEditorRight",
+        "workbench.action.moveEditorToRightGroup",
+      ]
+    },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  // ファイルを左ペインに移動
+  {
+    "key": "ctrl+[",
+    "command": "workbench.action.moveEditorToLeftGroup",
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  // ファイルを左ペインに複製
+  {
+    "key": "ctrl+g ctrl+[",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.splitEditorLeft",
+        "workbench.action.moveEditorToLeftGroup",
+      ]
+    },
+    "when": "editorTextFocus && vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+alt+h",
+    "command": "workbench.action.decreaseViewSize",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "workbench.action.increaseViewSize",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\\\r\n"
+    },
+    "when": "terminalFocus"
+  },
+  //----------------------------------------------------------
+  // ターミナルにフォーカスしている時の設定
+  //----------------------------------------------------------
+  // ターミナルの最大化/最小化
+  {
+    "key": "ctrl+m",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus"
+  },
+  // ターミナル → エディタへカーソル移動
+  {
+    "key": "ctrl+g ctrl+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+g c",
+    "command": "workbench.action.terminal.hidePanel",
+    "when": "terminalFocus"
+  },
+  //----------------------------------------------------------
+  // サイドバーにフォーカスしている時の設定
+  //----------------------------------------------------------
+  // リスト内で下へ移動
+  {
+    "key": "j",
+    "command": "list.focusDown",
+    "when": "listFocus && !inputFocus"
+  },
+  // リスト内で上へ移動
+  {
+    "key": "k",
+    "command": "list.focusUp",
+    "when": "listFocus && !inputFocus"
+  },
+  // リスト内で折りたたみ
+  {
+    "key": "h",
+    "command": "list.collapse",
+    "when": "listFocus && !inputFocus"
+  },
+  // リスト内で選択
+  {
+    "key": "l",
+    "command": "list.select",
+    "when": "listFocus && !inputFocus"
+  },
+  // 選択したファイルを表示
+  {
+    "key": "shift+enter",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "list.select",
+        "workbench.action.focusActiveEditorGroup"
+      ]
+    },
+    "when": "explorerViewletVisible && listFocus && !inputFocus"
+  },
+  // 新しいファイルの作成
+  {
+    "key": "a",
+    "command": "explorer.newFile",
+    "when": "listFocus && !inputFocus"
+  },
+  // 新しいフォルダの作成
+  {
+    "key": "shift+a",
+    "command": "explorer.newFolder",
+    "when": "listFocus && !inputFocus"
+  },
+  // ファイル・ディレクトリのリネーム
+  {
+    "key": "r",
+    "command": "renameFile",
+    "when": "listFocus && !inputFocus"
+  },
+  // ファイル・ディレクトリの削除
+  {
+    "key": "d",
+    "command": "deleteFile",
+    "when": "listFocus && !inputFocus"
+  },
+  // 隠しファイル・ディレクトリの表示切替
+  {
+    "key": "shift+h",
+    "command": "toggleexcludedfiles.toggle",
+    "when": "listFocus && !inputFocus"
+  },
+  // エクスプローラーの更新
+  {
+    "key": "shift+r",
+    "command": "workbench.files.action.refreshFilesExplorer",
+    "when": "listFocus && !inputFocus"
+  },
+]
