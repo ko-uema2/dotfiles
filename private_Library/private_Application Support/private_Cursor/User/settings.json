@@ -551,6 +551,8 @@
   "workbench.preferredLightColorTheme": "Solarized Dark",
   "claude-code.selectedModel": "default",
   "remote.SSH.remotePlatform": {
-    "ubuntu-desktop.local": "linux"
-  }
+    "ubuntu-desktop.local": "linux",
+    "ubuntu-desktop.internet": "linux"
+  },
+  "remote.autoForwardPortsSource": "hybrid"
 }

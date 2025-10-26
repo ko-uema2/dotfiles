@@ -17,19 +17,19 @@
   },
   // エディタの縦分割
   {
-    "key": "ctrl+f h",
+    "key": "ctrl+q h",
     "command": "workbench.action.splitEditorRight",
     "when": "editorTextFocus && vim.mode == 'Normal'"
   },
   // エディタの横分割
   {
-    "key": "ctrl+f v",
+    "key": "ctrl+q v",
     "command": "workbench.action.splitEditorDown",
     "when": "editorTextFocus && vim.mode == 'Normal'"
   },
   // ターミナルへのカーソルフォーカス
   {
-    "key": "ctrl+f ctrl+j",
+    "key": "ctrl+q ctrl+j",
     "command": "workbench.action.terminal.focus",
     "when": "editorFocus && vim.mode == 'Normal'"
   },
@@ -71,7 +71,7 @@
   },
   // ファイルを右ペインに複製
   {
-    "key": "ctrl+f ctrl+]",
+    "key": "ctrl+q ctrl+]",
     "command": "runCommands",
     "args": {
       "commands": [
@@ -89,7 +89,7 @@
   },
   // ファイルを左ペインに複製
   {
-    "key": "ctrl+f ctrl+[",
+    "key": "ctrl+q ctrl+[",
     "command": "runCommands",
     "args": {
       "commands": [
@@ -118,12 +118,12 @@
   },
   // ターミナル → エディタへカーソル移動
   {
-    "key": "ctrl+f ctrl+k",
+    "key": "ctrl+q ctrl+k",
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "terminalFocus"
   },
   {
-    "key": "ctrl+f c",
+    "key": "ctrl+q c",
     "command": "workbench.action.terminal.hidePanel",
     "when": "terminalFocus"
   },
