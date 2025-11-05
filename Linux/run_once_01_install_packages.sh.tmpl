@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 {{ if eq .chezmoi.os "linux" }}
 
@@ -82,9 +82,9 @@
       [rg]="rg --version | head -n 1"
     )
 
-    for pkg in ${(k)PACKAGES}; do
-      if command -v $pkg >/dev/null 2>&1; then
-        version=$(eval ${PACKAGES[$pkg]} 2>/dev/null)
+    for pkg in "${!PACKAGES[@]}"; do
+      if command -v "$pkg" >/dev/null 2>&1; then
+        version=$(eval "${PACKAGES[$pkg]}" 2>/dev/null)
         echo "✅ $pkg: $version"
       else
         echo "❌ $pkg: Not installed"
