@@ -60,6 +60,23 @@
     echo "✅ Neovim Installed"
 
 
+    ############################################################
+    # install the latest lazygit from the official GitHub release #
+    ############################################################
+
+    echo "Installing lazygit..."
+
+    TMP_DIR=$(mktemp -d)
+    cd "$TMP_DIR"
+    LATEST_VERSION=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | jq -r '.tag_name')
+    curl -LO "https://github.com/jesseduffield/lazygit/releases/download/${LATEST_VERSION}/lazygit_${LATEST_VERSION#v}_Linux_x86_64.tar.gz"
+    tar -xzf lazygit_*.tar.gz
+    sudo install lazygit /usr/local/bin/
+    cd -
+    rm -rf "$TMP_DIR"
+    echo "✅ lazygit installed"
+
+
     #########################################################
     # verify installed packages and display their versions  #
     #########################################################
@@ -80,6 +97,7 @@
       [peco]="peco --version"
       [nvim]="nvim --version | head -n 1"
       [rg]="rg --version | head -n 1"
+      [lazygit]="lazygit --version"
     )
 
     for pkg in "${!PACKAGES[@]}"; do
