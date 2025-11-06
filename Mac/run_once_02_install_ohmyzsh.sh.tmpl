@@ -3,6 +3,20 @@
 {{ if eq .chezmoi.os "darwin" }}
 
   ############################################################
+  # install Oh My Zsh                                        #
+  ############################################################
+
+  echo "Installing Oh My Zsh..."
+
+  if [ -d "$HOME/.oh-my-zsh" ]; then
+    echo "Oh My Zsh already exists, skipping installation."
+  else
+    git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
+    echo "✅ Oh My Zsh installed"
+  fi
+
+
+  ############################################################
   # install Oh My Zsh plugins                                #
   ############################################################
 
@@ -27,20 +41,6 @@
       echo "✅ $plugin installed"
     fi
   done
-
-
-  ############################################################
-  # install Oh My Zsh                                        #
-  ############################################################
-
-  echo "Installing Oh My Zsh..."
-
-  if [ -d "$HOME/.oh-my-zsh" ]; then
-    echo "Oh My Zsh already exists, skipping installation."
-  else
-    git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
-    echo "✅ Oh My Zsh installed"
-  fi
 
 
   ############################################################
