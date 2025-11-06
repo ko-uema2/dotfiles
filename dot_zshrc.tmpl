@@ -189,4 +189,8 @@ bindkey '^r' peco-select-history
 # Bind Ctrl+u to invoke peco-cdr
 zle -N peco-cdr
 bindkey '^u' peco-cdr
+
+# add custom binaries to PATH
+export PATH="$HOME/bin:$PATH"
+[ -f $HOME/.deno/env ] && source $HOME/.deno/env
 export PATH="$PATH:/opt/nvim/"
